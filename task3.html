@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Chatbot Interface</title>
+    <style>
+        /* Shared Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Login Page Styles */
+        .login-container {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-box img {
+            width: 50px;
+        }
+        .login-box h1 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .link {
+            font-size: 12px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .register-btn {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .register-btn:hover {
+            background-color: #f0f0f0;
+        }
+        /* Chat Page Styles */
+        .chat-container {
+            width: 400px;
+            margin: 50px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .chat-header {
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .chat-header .icons {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-header .icons div {
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+        .chat-messages {
+            padding: 10px;
+            min-height: 200px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+        }
+        .message.bot {
+            text-align: left;
+        }
+        .message.visitor {
+            text-align: right;
+        }
+        .message .text {
+            display: inline-block;
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .message.bot .text {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .message.visitor .text {
+            background-color: #007bff;
+            color: white;
+        }
+        .chat-footer {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .chat-footer button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function handleLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Regular expression to validate the username (email)
+            const usernameRegex = /^[a-zA-Z0-9]+@gmail.com+$/;
+
+            // Regular expression to validate the password
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+            // Check if the username is valid
+            if (!usernameRegex.test(username)) {
+                alert("Invalid email. Username must contain letters or numbers and include exactly one '@' and one '.' symbol.");
+                return;
+            }
+
+            // Check if the password is valid
+            if (!passwordRegex.test(password)) {
+                alert("Password must be at least 6 characters long, contain at least one number, one uppercase letter, and one special character.");
+                return;
+            }
+
+            // If both username and password are valid
+            if (username && password) {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.chat-container').style.display = 'block';
+                document.getElementById("chatbot-name").textContent = `Chatbot - ${username}`;
+            } else {
+                alert("Please enter a username and password.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Login Section -->
+    <div class="login-container">
+        <div class="login-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/MI-logo.png" alt="MI Logo">
+            <h1>Redmi Note 11s</h1>
+            <p><strong>Login</strong></p>
+            <p>Sign in to your Account</p>
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="btn" onclick="handleLogin()">Login</button>
+            <a href="#" class="link">I forgot my account. Click here to reset.</a>
+            <button class="register-btn">Register New Account</button>
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <h3 id="chatbot-name">Chatbot <span style="font-weight: normal; font-size: 14px;">ARIFUL</span></h3>
+            <div class="icons">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="chat-messages">
+            <div class="message bot">
+                <div class="text">Hello Nice</div>
+            </div>
+            <div class="message bot">
+                <div class="text">Welcome to LiveChat<br>I was made with . Pick a topic from the list or type down a question!</div>
+            </div>
+            <div class="message visitor">
+                <div class="text">Welcome</div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" placeholder="Write a message">
+            <button>Send</button>
+        </div>
+    </div>
+</body>
+</html>
